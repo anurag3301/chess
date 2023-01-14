@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include <iostream>
+#include <string>
 #define HEIGHT 800
 #define WEIGHT 800
 
@@ -40,12 +41,12 @@ public:
 class Piece{
 public:
     int pos_x, pos_y; 
-    sf::String name;
+    std::wstring name;
     sf::Text symbol;
 
     Piece(){}
 
-    Piece(std::string name, int px, int py, sf::Font &font):
+    Piece(std::wstring name, int px, int py, sf::Font &font):
         name(name), pos_x(px), pos_y(py)
     {
         symbol.setFont(font); 
@@ -91,10 +92,25 @@ public:
     }
 
     void init_peiece(){
+        std::vector<std::wstring> temp = {L"R", L"K", L"B"};
+
         for(int i=0; i<8; i++){
-            white_peieces[i] = Piece("P", i, 1, font);
-            black_peieces[i] = Piece("P", i, 6, font);
+            white_peieces[i] = Piece(L"P", i, 1, font);
+            black_peieces[i] = Piece(L"P", i, 6, font);
         }
+
+        for(int i=0; i<3; i++){
+            white_peieces[8+i] = Piece(temp[i], i, 0, font);
+            white_peieces[15-i] = Piece(temp[i], 7-i, 0, font);
+
+            black_peieces[8+i] = Piece(temp[i], i, 7, font);
+            black_peieces[15-i] = Piece(temp[i], 7-i, 7, font);
+        }
+        white_peieces[11] = Piece(L"Q", 3, 0, font);
+        white_peieces[12] = Piece(L"Ḱ", 4, 0, font);
+
+        black_peieces[11] = Piece(L"Ḱ", 3, 7, font);
+        black_peieces[12] = Piece(L"Q", 4, 7, font);
 
     }
 
@@ -111,7 +127,7 @@ public:
 
             window.clear();
             b.display(window);
-            for(int i=0; i<8; i++){
+            for(int i=0; i<16; i++){
                 white_peieces[i].display(window);
                 black_peieces[i].display(window);
             }
