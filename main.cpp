@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include <iostream>
+#include "board.h"
 
 #define HEIGHT 800
 #define WEIGHT 800
@@ -12,7 +13,8 @@ int main()
 {
     sf::RenderWindow window(sf::VideoMode(HEIGHT, WEIGHT), "SFML works!");
 
-    std::vector<std::vector<sf::RectangleShape>> board(8, std::vector<sf::RectangleShape>(8));
+    Board b;
+
     std::vector<std::vector<sf::Text>> text(8, std::vector<sf::Text>(8));
 
     sf::Font font;
@@ -24,11 +26,6 @@ int main()
 
     for(int i=0; i<8; i++){
         for(int j=0; j<8; j++){
-
-            sf::RectangleShape &cell = board[i][j];
-            cell.setSize({HEIGHT/8, WEIGHT/8});
-            cell.setPosition(j*(HEIGHT/8), i*(WEIGHT/8));
-
             sf::Text &cellText = text[i][j];
             cellText.setFont(font);
             cellText.setString("P");
@@ -39,10 +36,8 @@ int main()
             );
 
             if((i+j)%2==0 || (i==0&&j==0)){
-                cell.setFillColor(sf::Color::White);
                 cellText.setFillColor(sf::Color::Black);
             }else{
-                cell.setFillColor(sf::Color::Black);
                 cellText.setFillColor(sf::Color::White);
             }
         }
@@ -60,16 +55,12 @@ int main()
         }
 
         window.clear();
-        for(auto i:board){
-            for(sf::RectangleShape r:i){
-                window.draw(r);
-            }
-        }
-        for(auto i:text){
-            for(sf::Text t:i){
-                window.draw(t);
-            }
-        }
+        b.display(window);
+        // for(auto i:text){
+        //     for(sf::Text t:i){
+        //         window.draw(t);
+        //     }
+        // }
         window.display();
     }
 
