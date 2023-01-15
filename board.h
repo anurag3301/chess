@@ -7,6 +7,9 @@
 #define HEIGHT 800
 #define WIDTH 800
 
+using std::cout;
+using std::endl;
+
 struct Pos{
     int x;
     int y;
@@ -33,14 +36,12 @@ public:
     }
 
     void display(sf::RenderWindow &window){
-        for(auto i:board){
-            for(sf::RectangleShape r:i){
+        for(auto i:board)
+            for(sf::RectangleShape r:i)
                 window.draw(r);
-            }
-        }
     }
-
 };
+
 
 class Piece{
 public:
