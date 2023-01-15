@@ -61,17 +61,36 @@ public:
 };
 
 
+enum Piece_color{
+    Black_P,
+    White_P
+};
+
+enum Piece_type{
+    Pawn,
+    Rook,
+    Knight,
+    Bishop,
+    Queen,
+    King
+};
+
+
 class Piece{
 public:
     Pos pos;
     std::wstring name;
     sf::Text symbol;
+    Piece_color color;
+    Piece_type type;
 
     Piece(){}
 
-    Piece(std::wstring n, int px, int py, sf::Font &font){
+    Piece(std::wstring n, int px, int py, sf::Font &font, Piece_type t, Piece_color col){
         name = n;
         pos = {px, py};
+        color = col;
+        type = t;
 
         symbol.setFont(font); 
         symbol.setString(name);
@@ -82,7 +101,7 @@ public:
                 pos.y*(WIDTH/8) - symbol.getLocalBounds().height/2 + (WIDTH/8)/2
         );
 
-        if((pos.x+pos.y)%2==0 || (pos.y==0&&pos.x==0)){
+        if(pos.y >= 6){
             symbol.setFillColor(sf::Color::Black);
         }else{
             symbol.setFillColor(sf::Color::White);
@@ -91,6 +110,14 @@ public:
 
     Pos getPos(){
         return pos;
+    }
+
+    Piece_type getType(){
+        return  type;
+    }
+
+    Piece_color getColor(){
+        return  color;
     }
 
     void display(sf::RenderWindow &window){
@@ -121,24 +148,25 @@ public:
 
     void init_peiece(){
         std::vector<std::wstring> temp = {L"R", L"K", L"B"};
+        std::vector<Piece_type> type = {Rook, Knight, Bishop};
 
         for(int i=0; i<8; i++){
-            white_peieces[i] = Piece(L"P", i, 1, font);
-            black_peieces[i] = Piece(L"P", i, 6, font);
+            white_peieces[i] = Piece(L"P", i, 1, font, Pawn, White_P);
+            black_peieces[i] = Piece(L"P", i, 6, font, Pawn, Black_P);
         }
 
         for(int i=0; i<3; i++){
-            white_peieces[8+i] = Piece(temp[i], i, 0, font);
-            white_peieces[15-i] = Piece(temp[i], 7-i, 0, font);
+            white_peieces[8+i] = Piece(temp[i], i, 0, font, type[i], White_P);
+            white_peieces[15-i] = Piece(temp[i], 7-i, 0, font, type[i], White_P);
 
-            black_peieces[8+i] = Piece(temp[i], i, 7, font);
-            black_peieces[15-i] = Piece(temp[i], 7-i, 7, font);
+            black_peieces[8+i] = Piece(temp[i], i, 7, font, type[i], Black_P);
+            black_peieces[15-i] = Piece(temp[i], 7-i, 7, font, type[i], Black_P);
         }
-        white_peieces[11] = Piece(L"Q", 3, 0, font);
-        white_peieces[12] = Piece(L"Ḱ", 4, 0, font);
+        white_peieces[11] = Piece(L"Q", 3, 0, font, Queen, White_P);
+        white_peieces[12] = Piece(L"Ḱ", 4, 0, font, King, White_P);
 
-        black_peieces[11] = Piece(L"Ḱ", 3, 7, font);
-        black_peieces[12] = Piece(L"Q", 4, 7, font);
+        black_peieces[11] = Piece(L"Ḱ", 3, 7, font, King, Black_P);
+        black_peieces[12] = Piece(L"Q", 4, 7, font, Queen, Black_P);
 
     }
 
