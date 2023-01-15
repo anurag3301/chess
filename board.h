@@ -53,8 +53,7 @@ public:
 
     Piece(std::wstring n, int px, int py, sf::Font &font){
         name = n;
-        pos.x = px;
-        pos.y = py;
+        pos = {px, py};
 
         symbol.setFont(font); 
         symbol.setString(name);
@@ -125,15 +124,25 @@ public:
 
     }
 
+    void clicked(sf::Event &event){
+        if(event.mouseButton.button == sf::Mouse::Left){
+            Pos clicked_pos;
+            clicked_pos.x = event.mouseButton.x/(HEIGHT/8);
+            clicked_pos.y = event.mouseButton.y/(WIDTH/8);
+        } 
+    }
+
     void display(){
         while (window.isOpen())
         {
             sf::Event event;
-            window.waitEvent(event);
             while (window.pollEvent(event))
             {
                 if (event.type == sf::Event::Closed)
                     window.close();
+                if (event.type == sf::Event::MouseButtonPressed){
+                    clicked(event);
+                }
             }
 
             window.clear();
