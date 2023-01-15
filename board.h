@@ -7,6 +7,10 @@
 #define HEIGHT 800
 #define WIDTH 800
 
+struct Pos{
+    int x;
+    int y;
+};
 
 class Board{
 public:
@@ -40,15 +44,17 @@ public:
 
 class Piece{
 public:
-    int pos_x, pos_y; 
+    Pos pos;
     std::wstring name;
     sf::Text symbol;
 
     Piece(){}
 
-    Piece(std::wstring name, int px, int py, sf::Font &font):
-        name(name), pos_x(px), pos_y(py)
-    {
+    Piece(std::wstring n, int px, int py, sf::Font &font){
+        name = n;
+        pos.x = px;
+        pos.y = py;
+
         symbol.setFont(font); 
         symbol.setString(name);
         symbol.setCharacterSize(50);
@@ -58,11 +64,15 @@ public:
                 pos.y*(WIDTH/8) - symbol.getLocalBounds().height/2 + (WIDTH/8)/2
         );
 
-        if((pos_x+pos_y)%2==0 || (pos_y==0&&pos_x==0)){
+        if((pos.x+pos.y)%2==0 || (pos.y==0&&pos.x==0)){
             symbol.setFillColor(sf::Color::Black);
         }else{
             symbol.setFillColor(sf::Color::White);
         }
+    }
+
+    Pos getPos(){
+        return pos;
     }
 
     void display(sf::RenderWindow &window){
