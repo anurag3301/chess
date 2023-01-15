@@ -1,7 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include <iostream>
-#include "board.h"
+#include "Chess.h"
 
 #define HEIGHT 800
 #define WEIGHT 800
