@@ -15,6 +15,10 @@ struct Pos{
     int y;
 };
 
+bool operator==(const Pos &p1, const Pos &p2){
+    return p1.x == p2.x && p1.y == p2.y;
+}
+
 class Board{
 public:
     std::vector<std::vector<sf::RectangleShape>> board;
@@ -176,6 +180,18 @@ public:
             clicked_pos.x = event.mouseButton.x/(HEIGHT/8);
             clicked_pos.y = event.mouseButton.y/(WIDTH/8);
             b.cell_select(clicked_pos);
+            for(auto i:white_peieces){
+                if (i.getPos() == clicked_pos){
+                    cout << i.getColor() << " " << i.getType() << endl;
+                }
+            }
+
+            for(auto i:black_peieces){
+                if (i.getPos() == clicked_pos){
+                    cout << i.getColor() << " " << i.getType() << endl;
+                }
+            }
+            
         } 
     }
 
