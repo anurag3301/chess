@@ -5,7 +5,7 @@
 #include <iostream>
 #include <string>
 #define HEIGHT 800
-#define WEIGHT 800
+#define WIDTH 800
 
 
 class Board{
@@ -17,8 +17,8 @@ public:
         for(int i=0; i<8; i++){
             for(int j=0; j<8; j++){
                 sf::RectangleShape &cell = this->board[i][j];
-                cell.setSize({HEIGHT/8, WEIGHT/8});
-                cell.setPosition(j*(HEIGHT/8), i*(WEIGHT/8));
+                cell.setSize({HEIGHT/8, WIDTH/8});
+                cell.setPosition(j*(HEIGHT/8), i*(WIDTH/8));
                 if((i+j)%2==0 || (i==0&&j==0)){
                     cell.setFillColor(sf::Color::White);
                 }else{
@@ -54,8 +54,8 @@ public:
         symbol.setCharacterSize(50);
 
         symbol.setPosition(
-                pos_x*(HEIGHT/8) - symbol.getLocalBounds().width/2 + (HEIGHT/8)/2,
-                pos_y*(WEIGHT/8) - symbol.getLocalBounds().height/2 + (WEIGHT/8)/2
+                pos.x*(HEIGHT/8) - symbol.getLocalBounds().width/2 + (HEIGHT/8)/2,
+                pos.y*(WIDTH/8) - symbol.getLocalBounds().height/2 + (WIDTH/8)/2
         );
 
         if((pos_x+pos_y)%2==0 || (pos_y==0&&pos_x==0)){
@@ -80,7 +80,7 @@ public:
     std::vector<Piece> black_peieces;
     Piece p1;
 
-    Chess():window(sf::VideoMode(HEIGHT, WEIGHT), "Chess"){
+    Chess():window(sf::VideoMode(HEIGHT, WIDTH), "Chess"){
         if (!font.loadFromFile("arial.ttf")){
             std::cerr << ".Error while loading font" << std::endl;
             exit(1);
