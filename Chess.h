@@ -75,7 +75,8 @@ public:
                 for(auto i:moves){
                     Pos final_move = i+clicked_pos;
                     if((final_move.x>=0 && final_move.x<=7) &&
-                        (final_move.y>=0 && final_move.y<=7)){
+                        (final_move.y>=0 && final_move.y<=7) &&
+                        final_move != clicked_pos){
                         b.add_moves_indicator(final_move);
                     }
                 }
