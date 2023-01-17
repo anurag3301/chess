@@ -30,10 +30,14 @@ public:
 
     void add_moves_indicator(Pos move){
         sf::CircleShape circle;
-        int rad = 10;
+        int rad = 15;
         circle.setRadius(rad);
         circle.setPosition(move.x*(HEIGHT/8) + (HEIGHT/8)/2 - rad, move.y*(WIDTH/8) + (WIDTH/8)/2 - rad);
-        circle.setFillColor(sf::Color::Black);
+        if((move.x+move.y)%2==0 || (move.x==0&&move.y==0)){
+            circle.setFillColor(sf::Color(106, 135, 77));
+        }else{
+            circle.setFillColor(sf::Color(214, 214, 189));
+        }
         moves_indiator.push_back(circle);
     }
 
