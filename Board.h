@@ -5,6 +5,7 @@ class Board{
 public:
     std::vector<std::vector<sf::RectangleShape>> board;
     Pos selected;
+    std::vector<sf::CircleShape> moves_indiator;
 
     Board(){
         this -> board = std::vector<std::vector<sf::RectangleShape>>(8, std::vector<sf::RectangleShape>(8));
@@ -22,6 +23,23 @@ public:
                 }
             }
         }
+
+
+
+    }
+
+    void add_moves_indicator(Pos move){
+        sf::CircleShape circle;
+        int rad = 10;
+        circle.setRadius(rad);
+        circle.setPosition(move.x*(HEIGHT/8) + (HEIGHT/8)/2 - rad, move.y*(WIDTH/8) + (WIDTH/8)/2 - rad);
+        circle.setFillColor(sf::Color::Black);
+        moves_indiator.push_back(circle);
+    }
+
+    void display_move_indicator(sf::RenderWindow &window){
+        for(auto c:moves_indiator)
+            window.draw(c);
     }
 
     void cell_select(Pos &pos){
@@ -37,6 +55,8 @@ public:
         }else{
             board[selected.y][selected.x].setFillColor(sf::Color(245, 236, 105));
         }
+
+        moves_indiator.clear();
     }
 
     void display(sf::RenderWindow &window){

@@ -47,24 +47,39 @@ public:
 
     }
 
+
+    Piece* piece_on(Pos cell){
+        for(int i=0; i<white_peieces.size(); i++){
+            if(white_peieces[i].getPos() == cell){
+                return &white_peieces[i];
+            }
+            if(black_peieces[i].getPos() == cell){
+                return &black_peieces[i];
+            }
+        }
+        return nullptr;
+    }
+
     void clicked(sf::Event &event){
         if(event.mouseButton.button == sf::Mouse::Left){
             Pos clicked_pos;
             clicked_pos.x = event.mouseButton.x/(HEIGHT/8);
             clicked_pos.y = event.mouseButton.y/(WIDTH/8);
-            b.cell_select(clicked_pos);
-            for(auto i:white_peieces){
-                if (i.getPos() == clicked_pos){
-                    cout << i.getColor() << " " << i.getType() << endl;
-                }
-            }
 
-            for(auto i:black_peieces){
-                if (i.getPos() == clicked_pos){
-                    cout << i.getColor() << " " << i.getType() << endl;
+            b.cell_select(clicked_pos);
+
+            Piece* peice_oncell = piece_on(clicked_pos);
+
+            if(peice_oncell != nullptr){
+                std::vector<Pos> moves = peice_oncell->get_moves();
+                for(auto i:moves){
+                    Pos final_move = i+clicked_pos;
+                    if((final_move.x>=0 && final_move.x<=7) &&
+                        (final_move.y>=0 && final_move.y<=7)){
+                        b.add_moves_indicator(final_move);
+                    }
                 }
             }
-            
         } 
     }
 
@@ -83,6 +98,7 @@ public:
 
             window.clear();
             b.display(window);
+            b.display_move_indicator(window);
             for(int i=0; i<16; i++){
                 white_peieces[i].display(window);
                 black_peieces[i].display(window);

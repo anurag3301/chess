@@ -19,6 +19,9 @@ bool operator==(const Pos &p1, const Pos &p2){
     return p1.x == p2.x && p1.y == p2.y;
 }
 
+Pos operator+(const Pos &p1, const Pos &p2){
+    return Pos({p1.x+p2.x, p1.y+p2.y});
+}
 
 enum Piece_color{
     Black_P,
